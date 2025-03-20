@@ -7,8 +7,7 @@
   "scripts": {
     "start": "node dist/app.js",
     "dev": "nodemon src/app.ts",
-    "build": "tsc && node copy-assets.js",
-    "copy-assets": "node copy-assets.js",
+    "build": "tsc",
     "deploy": "node deploy.js",
     "deploy:first-time": "node deploy.js --first-time",
     "lint": "eslint . --ext .ts",
