@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import crypto from 'crypto';
 import mime from 'mime-types';
-import config from '../config/index.js';
+import config from '../config/index';
 
 /**
  * Creates all necessary directories for the application.

@@ -1,0 +1,38 @@
+<form id="challengeForm" class="challenge-form">
+    <div class="challenge-input-group">
+        <input type="text" id="answer" autocomplete="off" placeholder="Your answer..." autofocus>
+        <button type="submit" class="submit-btn">Submit</button>
+    </div>
+</form>
+
+<style>
+    .challenge-form {
+        max-width: 400px;
+        margin: 0 auto 1rem;
+    }
+
+    .challenge-input-group {
+        display: flex;
+    }
+
+    .challenge-input-group input {
+        flex-grow: 1;
+        border-radius: var(--radius) 0 0 var(--radius);
+        border-right: none;
+        font-size: 1rem;
+    }
+
+    .submit-btn {
+        border-radius: 0 var(--radius) var(--radius) 0;
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 0 1.25rem;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+    .submit-btn:hover {
+        background: var(--primary-dark);
+    }
+</style>

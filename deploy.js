@@ -87,8 +87,8 @@ function executeRemoteCommand(conn, command) {
   });
 }
 
-// Function to upload dist directory via SCP
-function uploadDistDirectory(conn) {
+// Function to upload entire project via SCP
+function uploadProject(conn) {
   return new Promise((resolve, reject) => {
     conn.sftp((err, sftp) => {
       if (err) {
@@ -96,8 +96,17 @@ function uploadDistDirectory(conn) {
         return;
       }
       
-      const localDistPath = path.join(__dirname, 'dist');
+      const localPath = __dirname;
       const remotePath = config.remotePath;
+      
+      // List of directories and files to exclude
+      const excludeList = [
+        'node_modules',
+        '.git',
+        'dist',
+        'deploy-config.json',
+        'db.json'
+      ];
       
       // Function to recursively upload a directory
       async function uploadDir(localDir, remoteDir) {
@@ -122,6 +131,12 @@ function uploadDistDirectory(conn) {
         const items = fs.readdirSync(localDir, { withFileTypes: true });
         
         for (const item of items) {
+          // Skip excluded items
+          if (excludeList.includes(item.name)) {
+            console.log(`Skipping excluded item: ${item.name}`);
+            continue;
+          }
+          
           const localItemPath = path.join(localDir, item.name);
           const remoteItemPath = `${remoteDir}/${item.name}`;
           
@@ -144,8 +159,8 @@ function uploadDistDirectory(conn) {
         }
       }
       
-      // Start uploading the dist directory
-      uploadDir(localDistPath, remotePath)
+      // Start uploading the project
+      uploadDir(localPath, remotePath)
         .then(() => {
           console.log('Upload completed successfully');
           resolve();
@@ -173,74 +188,15 @@ async function deploy() {
     const conn = await createSSHConnection();
     
     try {
-      // Step 3: Upload dist directory
-      console.log('========== Uploading files ==========');
-      await uploadDistDirectory(conn);
+      // Step 3: Upload entire project
+      console.log('========== Uploading project files ==========');
+      await uploadProject(conn);
       
-      // Step 4: Upload PM2 ecosystem file
-      console.log('========== Uploading PM2 ecosystem file ==========');
-      await new Promise((resolve, reject) => {
-        conn.sftp((err, sftp) => {
-          if (err) {
-            reject(err);
-            return;
-          }
-          
-          const localEcosystemFile = path.join(__dirname, 'ecosystem.config.cjs');
-          const remoteEcosystemFile = `${config.remotePath}/ecosystem.config.cjs`;
-          
-          console.log(`Uploading file: ${localEcosystemFile} -> ${remoteEcosystemFile}`);
-          sftp.fastPut(localEcosystemFile, remoteEcosystemFile, (err) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve();
-            }
-          });
-        });
-      });
-      
-      // Step 5: Upload package.json and package-lock.json
-      console.log('========== Uploading package files ==========');
-      await new Promise((resolve, reject) => {
-        conn.sftp((err, sftp) => {
-          if (err) {
-            reject(err);
-            return;
-          }
-          
-          // Upload package.json
-          const localPackageJson = path.join(__dirname, 'package.json');
-          const remotePackageJson = `${config.remotePath}/package.json`;
-          
-          console.log(`Uploading file: ${localPackageJson} -> ${remotePackageJson}`);
-          sftp.fastPut(localPackageJson, remotePackageJson, (err) => {
-            if (err) {
-              reject(err);
-              return;
-            }
-            
-            // Upload package-lock.json
-            const localPackageLockJson = path.join(__dirname, 'package-lock.json');
-            const remotePackageLockJson = `${config.remotePath}/package-lock.json`;
-            
-            console.log(`Uploading file: ${localPackageLockJson} -> ${remotePackageLockJson}`);
-            sftp.fastPut(localPackageLockJson, remotePackageLockJson, (err) => {
-              if (err) {
-                reject(err);
-              } else {
-                resolve();
-              }
-            });
-          });
-        });
-      });
-      
-      // Step 6: Install dependencies on the remote server
+      // Step 4: Install dependencies on the remote server
       console.log('========== Installing dependencies on remote server ==========');
       await executeRemoteCommand(conn, `cd ${config.remotePath} && npm install --production`);
       
-      // Step 7: Start or restart PM2 service
+      // Step 5: Start or restart PM2 service
       if (isFirstTime) {
         console.log('========== First-time deployment: Starting PM2 ==========');
         await executeRemoteCommand(conn, `cd ${config.remotePath} && pm2 start ecosystem.config.cjs`);

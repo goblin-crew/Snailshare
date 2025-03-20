@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 
 import path from 'path';
-import fileService from '../services/FileService.js';
-import { isValidFile } from '../middleware/fileValidation.js';
-import config from '../config/index.js';
+import fileService from '../services/FileService';
+import { isValidFile } from '../middleware/fileValidation';
+import config from '../config/index';
 
 import formidable, { Fields, Files } from 'formidable';
 

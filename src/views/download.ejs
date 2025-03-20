@@ -71,15 +71,8 @@
             <%= challenge.questionText %>
           </span>
         </div>
-
-        <form id="challengeForm" class="challenge-form">
-          <div class="challenge-input-group">
-            <input type="text" id="answer" autocomplete="off" placeholder="Your answer..." autofocus>
-            <button type="submit" class="submit-btn">Submit</button>
-          </div>
-        </form>
-
-        <div id="challengeResult" class="challenge-result"></div>
+        <%- include('layouts/challenges/easy/math-challenge') %>
+          <div id="challengeResult" class="challenge-result"></div>
       </div>
     </div>
   </div>

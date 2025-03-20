@@ -1,11 +1,11 @@
 import { Throttle } from 'stream-throttle';
 import { Response } from 'express';
 import { createReadStream } from 'fs';
-import { ActiveSessions, DownloadSession } from '../models/Session.js';
-import databaseService from './DatabaseService.js';
-import fileService from './FileService.js';
-import { generateSessionId } from '../utils/tokens.js';
-import config from '../config/index.js';
+import { ActiveSessions, DownloadSession } from '../models/Session';
+import databaseService from './DatabaseService';
+import fileService from './FileService';
+import { generateSessionId } from '../utils/tokens';
+import config from '../config/index';
 
 class ThrottleService {
     private sessions: ActiveSessions = {};
@@ -57,6 +57,8 @@ class ThrottleService {
     }
 
     getSession(sessionId: string): DownloadSession | null {
+        console.log(`Getting session ${sessionId}`);
+        console.log(this.sessions[sessionId] || null);
         return this.sessions[sessionId] || null;
     }
 

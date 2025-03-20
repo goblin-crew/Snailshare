@@ -1,4 +1,4 @@
-import { Challenge, ChallengeType, DifficultyLevel } from '../models/Challenge.js';
+import { Challenge, ChallengeType, DifficultyLevel } from '../models/Challenge';
 
 class ChallengeService {
     generateChallenge(difficulty: DifficultyLevel = DifficultyLevel.EASY): Challenge {

@@ -1,6 +1,6 @@
 import rateLimit from 'express-rate-limit';
 import { Request, Response } from 'express';
-import config from '../config/index.js';
+import config from '../config/index';
 
 // Create a rate limiter for the API endpoints
 export const apiLimiter = rateLimit({

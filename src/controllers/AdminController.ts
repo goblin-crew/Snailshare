@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import path from 'path';
-import databaseService from '../services/DatabaseService.js';
-import fileService from '../services/FileService.js';
-import throttleService from '../services/ThrottleService.js';
-import { verifyAdminPassword } from '../utils/security.js';
+import databaseService from '../services/DatabaseService';
+import fileService from '../services/FileService';
+import throttleService from '../services/ThrottleService';
+import { verifyAdminPassword } from '../utils/security';
 
 class AdminController {
     async showLoginPage(req: Request, res: Response): Promise<void> {

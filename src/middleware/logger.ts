@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import winston from 'winston';
 import path from 'path';
-import config from '../config/index.js';
+import config from '../config/index';
 
 // Create a custom Winston logger
 const logger = winston.createLogger({

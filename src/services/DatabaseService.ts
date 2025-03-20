@@ -6,8 +6,8 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-import config from '../config/index.js';
-import { FileMetadata } from '../models/File.js';
+import config from '../config/index';
+import { FileMetadata } from '../models/File';
 import { Low } from 'lowdb';
 import { JSONFile } from 'lowdb/node';
 

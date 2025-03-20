@@ -1,10 +1,10 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { createReadStream, constants as fsConstants } from 'fs';
-import config from '../config/index.js';
-import { FileMetadata, UploadedFile } from '../models/File.js';
-import databaseService from './DatabaseService.js';
-import { generateRandomId, generateDownloadToken } from '../utils/tokens.js';
+import config from '../config/index';
+import { FileMetadata, UploadedFile } from '../models/File';
+import databaseService from './DatabaseService';
+import { generateRandomId, generateDownloadToken } from '../utils/tokens';
 
 class FileService {
     private uploadDir: string;

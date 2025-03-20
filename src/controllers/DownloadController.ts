@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import fileService from '../services/FileService.js';
-import throttleService from '../services/ThrottleService.js';
-import challengeService from '../services/ChallengeService.js';
-import { DifficultyLevel } from '../models/Challenge.js';
-import { generateSessionId } from '../utils/tokens.js';
+import fileService from '../services/FileService';
+import throttleService from '../services/ThrottleService';
+import challengeService from '../services/ChallengeService';
+import { DifficultyLevel } from '../models/Challenge';
+import { generateSessionId } from '../utils/tokens';
 
 class DownloadController {
     // Arrow function ensures that `this` is bound to the instance.
@@ -28,12 +28,14 @@ class DownloadController {
 
             // Get session ID from query (if any)
             let sessionId = req.query.session as string;
+            // Check if the session exists
+            const sessionExists = sessionId ? throttleService.getSession(sessionId) : false;
             // Check if the download has started (challenge/download page)
             const download = req.query.download === '1';
 
-            if (!download) {
+            if (!download || !sessionExists) {
                 // Intermediate page: if no session ID is provided, create one now
-                if (!sessionId) {
+                if (!sessionId || !sessionExists) {
                     const session = throttleService.createSession(file.metadata.id, fileToken, undefined);
                     sessionId = session.id;
                 }

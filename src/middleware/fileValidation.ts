@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import path from 'path';
-import config from '../config/index.js';
+import config from '../config';
+
 
 // List of allowed file extensions and MIME types
 const ALLOWED_EXTENSIONS = [

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { verifyAdminPassword } from '../utils/security.js';
+import { verifyAdminPassword } from '../utils/security';
 
 /**
  * Middleware to check for admin authentication.

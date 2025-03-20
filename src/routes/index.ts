@@ -1,7 +1,7 @@
 import express from 'express';
-import uploadRoutes from './upload.js';
-import downloadRoutes from './download.js';
-import adminRoutes from './admin.js';
+import uploadRoutes from './upload';
+import downloadRoutes from './download';
+import adminRoutes from './admin';
 
 const router = express.Router();
 

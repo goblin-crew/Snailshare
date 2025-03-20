@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import challengeService from '../services/ChallengeService.js';
-import throttleService from '../services/ThrottleService.js';
-import { DifficultyLevel } from '../models/Challenge.js';
+import challengeService from '../services/ChallengeService';
+import throttleService from '../services/ThrottleService';
+import { DifficultyLevel } from '../models/Challenge';
 
 class ChallengeController {
     async handleChallenge(req: Request, res: Response): Promise<any> {

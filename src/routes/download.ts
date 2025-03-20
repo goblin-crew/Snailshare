@@ -1,6 +1,6 @@
 import express from 'express';
-import downloadController from '../controllers/DownloadController.js';
-import { requireValidSession } from '../middleware/auth.js';
+import downloadController from '../controllers/DownloadController';
+import { requireValidSession } from '../middleware/auth';
 
 const router = express.Router();
 
