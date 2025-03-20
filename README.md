@@ -54,7 +54,7 @@ npm run build
   "password": "your-password",
   "port": 22,
   "remotePath": "/path/to/deployment/directory",
-  "pm2AppName": "fancy-server"
+  "pm2AppName": "snailshare"
 }
 ```
 
